@@ -25,7 +25,7 @@
           <td>{{ item.content }}</td>
           <td>{{ item.createdTime }}</td>
           <td><button>{{ item.status }}</button></td>
-          <td><button>削除</button></td>
+          <td><button @click="deleteTask(item)">削除</button></td>
         </tr>
       </tbody>
     </table>
@@ -45,13 +45,16 @@ export default {
   },
   methods: {
     addTask: function() {
-      // 何かしら入力がある場合はstoreに保存
+      // store.commitでmutationsを呼ぶ
       if (this.content != "") {
         this.$store.commit("addTask", {
           content: this.content
         });
         this.content = "";
       }
+    },
+    deleteTask: function(item) {
+      this.$store.commit('deleteTask', item)
     }
   }
 }

@@ -19,16 +19,29 @@ const createStore = () => {
             ]
         }),
         mutations: {
-            addTask: function(state, obj) {
+            addTask: function(state, selectedTask) {
                 // addボタンを押下した時の現在時刻を取得
                 var date = new Date();
                 var formatedDate = date.toLocaleString();
 
                 state.todos.unshift({
-                    content: obj.content,
+                    content: selectedTask.content,
                     createdTime: formatedDate,
                     status: 'ToDo'
                 })
+            },
+            deleteTask: function(state, selectedTask) {
+                for(var i = 0; i <= state.todos.length; i++) {
+                    // 削除対象のタスク
+                    const task = state.todos[i];
+                    if (task.content == selectedTask.content && task.createdTime == selectedTask.createdTime) {
+                        if (confirm("削除しますか？")){
+                            state.todos.splice(i,1);
+                            return;
+                        }
+                        return;
+                    }
+                }
             }
         }
     })
